@@ -92,7 +92,25 @@ function handle.LOAD()
 end
 
 function handle.LOAD2()
-    local key = format('%s|%s', GetCVar'realmName', UnitFactionGroup'player')
+    local realm = GetCVar'realmName' or 'Unknown Realm'
+    local faction = UnitFactionGroup'player'
+    -- Some 1.12 clients briefly return nil here during PLAYER_LOGIN.  Recover
+    -- the faction from the non-localized race token instead of passing nil to
+    -- string.format and preventing Aux from loading.
+    if not faction then
+        local _, race = UnitRace'player'
+        if race == 'Orc' or race == 'Troll' or race == 'Tauren' or race == 'Scourge' then
+            faction = 'Horde'
+        elseif race then
+            faction = 'Alliance'
+        else
+            faction = 'Unknown'
+        end
+    end
+    if realm == 'Nordanaar' then
+        faction = 'Horde'
+    end
+    local key = format('%s|%s', realm, faction)
 	if GetCVar'realmName' == 'Nordanaar' then
 		key = format('%s|%s', GetCVar'realmName', 'Horde')
 	end

@@ -3,7 +3,7 @@
 ## OptionalDeps: ShaguTweaks
 ## Title: Aux Auction House - Classic
 ## Notes: Modern auction house replacement for Vanilla 1.12.1
-## Version: 1.0.0
+## Version: 1.0.1
 ## SavedVariables: aux
 
 libs\package.lua
